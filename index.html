@@ -7,9 +7,21 @@
     <meta name="description" content="Ottawa Openstreetmap : " />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	 <style>
+		 /* override the img styles from the github page stylesheet.css */
+		img {
+			border-style: none;
+			box-shadow: none;
+		}
+		/* give the map a height */
+		#osmmap {
+			height: 220px;	
+		}
+	 </style>
     <title>Ottawa Openstreetmap</title>
     
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -20,10 +32,28 @@
       ga('send', 'pageview');
 
     </script>
+    <script>
+		var map;
+		var meetup_coords = [45.39169, -75.75434];
+		function initMap() {
+			map = L.map('osmmap', {
+		   	center: meetup_coords,
+		   	zoom: 18
+			});
+		
+			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+		    	maxZoom: 19
+			}).addTo(map);
+			
+			var marker = L.marker(meetup_coords).addTo(map);
+			marker.bindPopup('<a href="http://www.meetup.com/openstreetmap-ottawa/events/192567982/" target="_blank">Click here for Meetup details</a><br><strong>Bridgehead</strong><br><em>362 Richmond Road, Ottawa</em><br><br><a href="http://www.openstreetmap.org/#map=19/45.39169/-75.75434&layers=N">Full page map</a>').openPopup();
+			}
+    </script>
     
   </head>
 
-  <body>
+  <body onload="initMap();">
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
@@ -53,6 +83,7 @@
 <a name="mapping-parties" class="anchor" href="#mapping-parties"><span class="octicon octicon-link"></span></a>Mapping Parties</h3>
 
 <p>Our next mapping party is July 20th @ 9am. We'll be helping HOT map Lesotho. Details <a href="http://www.meetup.com/openstreetmap-ottawa/events/192567982/">here</a>.</p>
+<div id="osmmap" class="map"></div>
 
 <h3>
 <a name="this-weeks-challenge" class="anchor" href="#this-weeks-challenge"><span class="octicon octicon-link"></span></a>This Weeks Challenge</h3>
